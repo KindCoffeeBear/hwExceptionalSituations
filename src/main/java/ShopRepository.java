@@ -22,7 +22,12 @@ public class ShopRepository {
      * @param product — добавляемый товар
      */
     public void add(Product product) {
-        products = addToArray(products, product);
+        if (findById(product.getId()) == null) {
+            System.out.println(product.getId());
+            products = addToArray(products, product);
+        } else {throw new AlreadyExistsException(
+                "Товар с ID " + product.getId() + " уже существует"
+        );}
     }
 
     public Product[] findAll() {

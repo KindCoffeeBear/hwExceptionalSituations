@@ -1,13 +1,12 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.security.PublicKey;
-
-public class ShopFoundExceptionTest {
+public class ShopRepositoryTest {
     ShopRepository products = new ShopRepository();
     Product product1 = new Product(234, "Мыло", 101);
     Product product2 = new Product(513, "Хлеб", 68);
     Product product3 = new Product(563, "Компьютер", 75_087);
+    Product product4 = new Product(513, "Ключ", 150);
 
     @Test
     public void shouldAddProductAndFindAll() {
@@ -55,6 +54,17 @@ public class ShopFoundExceptionTest {
 
         Assertions.assertThrows(NotFoundException.class, () -> {
             products.remove(100);
+        });
+    }
+
+    @Test
+    public void testAlreadyExistsException() {
+        products.add(product1);
+        products.add(product2);
+        products.add(product3);
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            products.add(product4);
         });
     }
 }
